@@ -1,3 +1,5 @@
+This is Node.js Todo list application, with Postgres database used for storing the data.
+
 Getting started
 
 1. Clone this repo
@@ -14,7 +16,7 @@ Getting started
 
     To add a task - npm run start add "some task"
 
-    To delete a task - npm run start delete <id>
+    To delete a task - npm run start delete id
 
-    To complete a task - npm run start complete <id>
+    To complete a task - npm run start complete id
 

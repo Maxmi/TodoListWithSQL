@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const pgp = require('pg-promise');
 const command = process.argv[2];
-// console.log(command);
 const taskName = process.argv[3];
 const id = process.argv[3];
 
