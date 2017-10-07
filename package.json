@@ -1,0 +1,33 @@
+{
+  "name": "TodoListWithSQL",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tasks.js",
+  "scripts": {
+    "start": "node tasks.js",
+  
+    "test:db:create": "createdb TodoListWithSQL_test",
+    "test:db:drop": "dropdb TodoListWithSQL_test",
+    "test:db:loadschema": "psql TodoListWithSQL_test < ./database/schema.sql",
+    "test:db:init_data": "psql TodoListWithSQL_test < ./database/init_data.sql",
+    "test:db:reset": "npm run test:db:drop && npm run test:db:create && npm run test:db:loadschema",
+    "test": "export NODE_ENV=test && npm run test:db:reset && mocha",
+
+    "db:create": "createdb TodoListWithSQL",
+    "db:init": "npm run db:loadschema && npm run db:init_data",
+    "db:loadschema": "psql TodoListWithSQL < ./database/schema.sql",
+    "db:init_data": "psql TodoListWithSQL < ./database/init_data.sql"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "pg-promise": "^6.10.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1",
+    "pg-monitor": "^0.8.3"
+  }
+}
