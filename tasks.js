@@ -1,11 +1,10 @@
 #!/usr/bin/env node
-const pgp = require('pg-promise');
 const command = process.argv[2];
-const taskName = process.argv[3];
+const taskName = process.argv.slice(3).join(' ');
 const id = process.argv[3];
 
 const { list, addTask, removeTask, completeTask } = require('./commands');
-
+const { closeConnection } = require('./database/db_utils')
 
 switch (command) {
   case 'add':
@@ -23,3 +22,5 @@ switch (command) {
   default:
     console.log('Command not recognized');
 }
+
+closeConnection()
