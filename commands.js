@@ -1,27 +1,41 @@
-const  { getAllTasks, createTask, deleteTask, updateTask,  closeConnection } = require('./database/db_utils.js');
+const { getAllTasks, createTask, deleteTask, updateTask } = require('./database/db_utils.js');
 
+/**
+ * [render description]
+ * @param  {array} filtered [description]
+ * @return {string}          [description]
+ */
 const render = (filtered) => {
   const header = '\nID Description \n-- ----------- \n';
-  const tasks = filtered.map((task) => `${task.id} ${task.description}\n`).join(' ');
+  const tasks = filtered.map(task => `${task.id} ${task.description}\n`).join(' ');
   return `${header} ${tasks}`;
 };
 
-const list = () => {
-  return getAllTasks().then(allTasks => {
-    const filtered = allTasks.filter(task => !task.isComplete);
-    console.log(render(filtered));
-    const message = `You have ${filtered.length} task(s).`;
-    console.log(message);
-    return message;
-  }).catch(err => {
-    throw new Error ('An error has occured while reading from db');
-  })
-};
+const printOutput = (printArray) => {
+  const [message, taskArray] = printArray
+  if (taskArray) console.log(render(taskArray))
+  console.log(message)
+}
 
+const getListPrintoutStrings = () =>
+  getAllTasks()
+    .then((allTasks) => {
+      const filtered = allTasks.filter(task => !task.isComplete);
+      const message = `You have ${filtered.length} task(s).`;
+      return [message, filtered];
+    }).catch((err) => {
+      throw new Error(`An error has occured while reading from db: ${err.message}`);
+    });
 
-const addTask = (taskName) => {  
+/**
+ * [list description]
+ * @return {[type]} [description]
+ */
+const list = () => getListPrintoutStrings().then(printOutput)
+
+const addTask = (taskName) => {
   return createTask(taskName).then(res => {
-    const message = `Created task ${res.id}`; 
+    const message = `Created task ${res.id}`;
     console.log(message);
     return message;
   }).catch(err => {
@@ -54,6 +68,6 @@ const completeTask = (id) => {
 module.exports = {
   list,
   addTask,
-  removeTask, 
+  removeTask,
   completeTask
 }
